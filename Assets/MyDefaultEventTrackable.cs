@@ -5,7 +5,7 @@ using UnityEngine.Networking;
 using Vuforia;
 using System;
 using TMPro;
-public class MyDefaultEventTrackable : DefaultTrackableEventHandler {
+public class MyDefaultEventTrackable : DefaultObserverEventHandler {
 
     [Serializable]
     public class Temperature
@@ -17,7 +17,7 @@ public class MyDefaultEventTrackable : DefaultTrackableEventHandler {
     TMP_Text output;
 
     protected override void Start()
-    {       
+    {   
         base.Start();
         output = GameObject.Find("Output").GetComponent<TMP_Text>();
     }
@@ -51,9 +51,9 @@ public class MyDefaultEventTrackable : DefaultTrackableEventHandler {
             }
         }
     }
-
     //TODO: GetLight -> light/{id}
 
     //Ação Botoes
     //TODO: PutLightState -> ligth/{id} body --> lightOn: true or false
 }
+
