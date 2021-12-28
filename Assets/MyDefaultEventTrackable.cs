@@ -1,25 +1,44 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
-using Vuforia;
 using System;
 using TMPro;
 public class MyDefaultEventTrackable : DefaultObserverEventHandler {
 
-    [Serializable]
-    public class Temperature
+[Serializable]
+public class Lampada
     {
         public int id;
-        public string temperature;
+        public object bulb_id;
+        public string ip;
+        public string name;
+        public bool state;
+        public string mac_address;
+        public object creared_at;
+        public object updated_at;
     }
 
-    TMP_Text output;
+[Serializable]
+    public class Data
+    {
+        public Lampada data;
+    }
+
+    TMP_Text outputNome1, outputEstado1, outputIP1, outputNome2, outputEstado2, outputIP2;
 
     protected override void Start()
     {   
         base.Start();
-        output = GameObject.Find("Output").GetComponent<TMP_Text>();
+
+        //LAMP1
+        outputNome1 = GameObject.Find("OutputNome1").GetComponent<TMP_Text>();
+        outputEstado1 = GameObject.Find("OutputEstado1").GetComponent<TMP_Text>();
+        outputIP1 = GameObject.Find("OutputIP1").GetComponent<TMP_Text>();
+
+        //LAMP2
+        outputNome2 = GameObject.Find("OutputNome2").GetComponent<TMP_Text>();
+        outputEstado2 = GameObject.Find("OutputEstado2").GetComponent<TMP_Text>();
+        outputIP2 = GameObject.Find("OutputIP2").GetComponent<TMP_Text>();
     }
 
     protected override void OnTrackingFound()
@@ -32,28 +51,57 @@ public class MyDefaultEventTrackable : DefaultObserverEventHandler {
         base.OnTrackingLost ();
     }
 
-    void GetData() => StartCoroutine(GetTemperature());
+    void GetData() => StartCoroutine(GetLampada());
 
-    IEnumerator GetTemperature()
+    IEnumerator GetLampada()
     {
-        output.text = "Loading...";
-        string uri = "https://618c145cded7fb0017bb93e6.mockapi.io/api/ar/temperatures";
-        using (UnityWebRequest request = UnityWebRequest.Get(uri))
+        
+        //LAMP1
+        outputNome1.text = "Loading...";
+        outputEstado1.text = "Loading...";
+        outputIP1.text = "Loading...";
+
+        //LAMP2
+        outputNome2.text = "Loading...";
+        outputEstado2.text = "Loading...";
+        outputIP2.text = "Loading...";
+
+        string uri1 = "http://127.0.0.1:8080/api/lamp/1";
+        string uri2 = "http://127.0.0.1:8080/api/lamp/2";
+
+        using (UnityWebRequest request = UnityWebRequest.Get(uri1))
         {
             yield return request.SendWebRequest();
             if(request.isNetworkError || request.isHttpError){
-                output.text = request.error;
+                outputNome1.text = request.error;
+                outputEstado1.text = request.error;
+                outputIP1.text = request.error;
             }
             else
             {
-                var x = JsonUtility.FromJson<Temperature>(request.downloadHandler.text);
-                output.text = x.temperature;
+                Data lampada1 = JsonUtility.FromJson<Data>(request.downloadHandler.text);
+                outputNome1.text = lampada1.data.name;
+                outputEstado1.text = lampada1.data.state.Equals(true) ? "Ligada" : "Desligada";
+                outputIP1.text = lampada1.data.ip;
+            }
+        }
+
+        using (UnityWebRequest request = UnityWebRequest.Get(uri2))
+        {
+            yield return request.SendWebRequest();
+            if(request.isNetworkError || request.isHttpError){
+                outputNome2.text = request.error;
+                outputEstado2.text = request.error;
+                outputIP2.text = request.error;
+            }
+            else
+            {
+                Data lampada2 = JsonUtility.FromJson<Data>(request.downloadHandler.text);
+                outputNome2.text = lampada2.data.name;
+                outputEstado2.text = lampada2.data.state.Equals(true) ? "Ligada" : "Desligada";
+                outputIP2.text = lampada2.data.ip;
             }
         }
     }
-    //TODO: GetLight -> light/{id}
-
-    //Ação Botoes
-    //TODO: PutLightState -> ligth/{id} body --> lightOn: true or false
 }
 
