@@ -93,8 +93,8 @@ public class Lampada
         outputEstado2.text = "Loading...";
         outputIP2.text = "Loading...";
 
-        string uri1 = "http://127.0.0.1:8080/api/lamp/1";
-        string uri2 = "http://127.0.0.1:8080/api/lamp/2";
+        string uri1 = "http://192.168.1.66:8080/api/lamp/1";
+        string uri2 = "http://192.168.1.66:8080/api/lamp/2";
 
         using (UnityWebRequest request = UnityWebRequest.Get(uri1))
         {
@@ -139,9 +139,9 @@ public class Lampada
         outputLamp1Tempo.text = "Loading...";
         outputLamp2Tempo.text = "Loading...";
 
-        string uriUptimes = "http://127.0.0.1:8080/api/uptimes/lastDay";
-        string uriTotalUptime1= "http://127.0.0.1:8080/api/uptimes/totalUptime/1";
-        string uriTotalUptime2= "http://127.0.0.1:8080/api/uptimes/totalUptime/2";
+        string uriUptimes = "http://192.168.1.66:8080/api/uptimes/lastDay";
+        string uriTotalUptime1= "http://192.168.1.66:8080/api/uptimes/totalUptime/1";
+        string uriTotalUptime2= "http://192.168.1.66:8080/api/uptimes/totalUptime/2";
 
         using (UnityWebRequest request = UnityWebRequest.Get(uriUptimes))
         {

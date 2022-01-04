@@ -38,8 +38,8 @@ public class Lampada
     }
     IEnumerator Request(){
 
-        string uri1 = "http://127.0.0.1:8080/api/lamp/1/toggle";
-        string uri2 = "http://127.0.0.1:8080/api/lamp/1";
+        string uri1 = "http://192.168.1.66:8080/api/lamp/1/toggle";
+        string uri2 = "http://192.168.1.66:8080/api/lamp/1";
 
         using (UnityWebRequest request = UnityWebRequest.Post(uri1,""))
         {

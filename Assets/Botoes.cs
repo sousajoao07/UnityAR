@@ -15,7 +15,7 @@ public class Botoes : MonoBehaviour
     }
     IEnumerator Request(){
 
-        string uri = "http://127.0.0.1:8080/api/lamp/toggleAll";
+        string uri = "http://192.168.1.66:8080/api/lamp/toggleAll";
 
         using (UnityWebRequest request = UnityWebRequest.Post(uri,""))
         {
