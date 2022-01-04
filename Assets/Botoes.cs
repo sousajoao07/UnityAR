@@ -9,12 +9,9 @@ public class Botoes : MonoBehaviour
     public VirtualButtonBehaviour VirtualButtonLigar;
 
     public bool state = true;
-    TMP_Text outputEstado3;
     void Start()
     {
         VirtualButtonLigar.RegisterOnButtonReleased(Toggle);
-        outputEstado3 = GameObject.Find("OutputEstado3").GetComponent<TMP_Text>();
-        
     }
     IEnumerator Request(){
 
@@ -36,7 +33,6 @@ public class Botoes : MonoBehaviour
                 Debug.Log("Done!");
             }
         }
-        
     }
  
     public void Toggle(VirtualButtonBehaviour vb)
